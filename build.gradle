@@ -1,0 +1,41 @@
+apply plugin: 'application'
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: "com.github.samueltbrown.cucumber"
+apply plugin: 'com.bmuschko.docker-remote-api'
+
+import com.bmuschko.gradle.docker.tasks.image.*
+import com.bmuschko.gradle.docker.tasks.container.*
+
+version = '1.0.0-SNAPSHOT'
+sourceCompatibility = 1.8
+
+buildscript {
+	ext {
+		dockerPluginVersion = '3.2.0'
+		jUnitVersion = '4.12'
+	}
+	repositories {
+		mavenCentral()
+		jcenter()
+	}
+	dependencies {
+		classpath("com.bmuschko:gradle-docker-plugin:${dockerPluginVersion}")
+		classpath("com.github.samueltbrown:gradle-cucumber-plugin:0.9")
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	testCompile('junit:junit:4.12')
+	testCompile('info.cukes:cucumber-junit:1.2.5')
+	cucumberRuntime('info.cukes:cucumber-java:1.2.5')
+	//cucumberCompile('info.cukes:cucumber-java:1.2.5')
+}
+
+// Define the main class for the application
+mainClassName = 'App'
+
